@@ -9,6 +9,7 @@ RUN set -x && \
 	tar xzf linux_amd64_server.tar.gz -C /nps && \
 	cd /nps && \
 	chmod +x nps && \
+	cp -rf conf/* /nps/conf/
 	cd .. && \
 	rm -rf *.tar.gz
 
@@ -17,5 +18,6 @@ VOLUME /nps/conf
 
 ADD ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["sh", "/entrypoint.sh"]
+#ENTRYPOINT ["sh", "/entrypoint.sh"]
+CMD nohup sh -c '/nps/nps'
 # CMD ["/entrypoint.sh"]
