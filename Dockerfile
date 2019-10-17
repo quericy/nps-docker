@@ -9,7 +9,7 @@ RUN set -x && \
 	tar xzf linux_amd64_server.tar.gz -C /nps && \
 	cd /nps && \
 	chmod +x nps && \
-	cp -rf conf/* /nps/conf/
+	cp -rf conf/* /nps/conf/  && \
 	cd .. && \
 	rm -rf *.tar.gz
 
