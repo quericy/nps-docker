@@ -8,6 +8,7 @@ RUN set -x && \
     mkdir /nps && \
 	tar xzf linux_amd64_server.tar.gz -C /nps && \
 	cd /nps && \
+	chmod +x nps && \
 	cd .. && \
 	rm -rf *.tar.gz
 
