@@ -3,18 +3,20 @@ version: '2'
 # ports: 3100-3199
 
 services:
-
     nps_docker:
-        build:
-            context: ./
-            dockerfile: Dockerfile
+        image: quericy/nps-docker:latest
         restart: always
-        container_name: nps_docker
+        container_name: my_nps_docker
         ports:
             - "3100-3199:3100-3199"
             - "80:80"
             - "443:443"
             - "8024:8024"
         volumes:
-            - ./conf:/nps/conf
+            - ./conf:/root/nps/conf
+        networks:
+            - app_net
+networks:
+    app_net:
+        external: true
 
