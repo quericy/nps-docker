@@ -1,23 +1,19 @@
-FROM alpine:3.8
+FROM alpine:3.9
 MAINTAINER quericy <quericy@live.com>
 
 ENV NPS_VERSION 0.23.2
 
-RUN set -x && \
-	wget --no-check-certificate https://github.com/cnlh/nps/releases/download/v${NPS_VERSION}/linux_amd64_server.tar.gz && \ 
-    mkdir /nps && \
-	tar xzf linux_amd64_server.tar.gz -C /nps && \
-	cd /nps && \
-	chmod +x nps && \
-	cp -rf conf/* /nps/conf/  && \
-	cd .. && \
-	rm -rf *.tar.gz
+WORKDIR /root/nps/
 
-WORKDIR /nps
-VOLUME /nps/conf
+RUN wget --no-check-certificate -O nps_server.tar.gz https://github.com/cnlh/nps/releases/download/v${NPS_VERSION}/linux_amd64_server.tar.gz && \
+    tar -xzvf nps_server.tar.gz --strip-components 1 && \
+    rm -f nps_server.tar.gz && \
+    chmod a+x ./nps
 
-ADD ./entrypoint.sh /
-RUN chmod +x /entrypoint.sh
-#ENTRYPOINT ["sh", "/entrypoint.sh"]
-CMD nohup sh -c '/nps/nps'
-# CMD ["/entrypoint.sh"]
+
+ADD conf/nps.conf conf/nps.conf
+
+
+# ENTRYPOINT ["sh", "/entrypoint.sh"]
+# CMD nohup sh -c '/nps/nps'
+ENTRYPOINT ["/root/nps/nps"]
